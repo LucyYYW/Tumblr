@@ -8,7 +8,6 @@
 
 #import "PhotosViewController.h"
 #import "PhotoCell.h"
-
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *posts;
@@ -21,7 +20,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
+    self.tableView.rowHeight = 240;
     
     // Do any additional setup after loading the view.
     NSURL *url = [NSURL URLWithString:@"https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/posts/photo?api_key=Q6vHoaVm5L1u2ZAW1fqv3Jw48gFzYVg9P0vH0VHl3GVy6quoGV"];
@@ -40,6 +39,7 @@
             NSDictionary *responseDictionary = dataDictionary[@"response"];
             // Store the returned array of dictionaries in our posts property
             self.posts = responseDictionary[@"posts"];
+            [self.tableView reloadData];
         }
     
     }];
@@ -70,6 +70,7 @@
         
         // 4. Create a URL using the urlString
         NSURL *url = [NSURL URLWithString:urlString];
+        [cell.photoView setImageWithURL:url];
     }
     //cell.textLabel.text = [NSString stringWithFormat:@"This is row %ld", (long)indexPath.row];
     
